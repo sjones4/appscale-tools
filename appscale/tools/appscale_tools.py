@@ -378,7 +378,7 @@ class AppScaleTools(object):
        "{}/{}".format(service.http, service.https),
        "{}/{}".format(service.appservers, service.pending_appservers),
        "{}/{}".format(service.reqs_enqueued, service.total_reqs),
-       "Ready" if service.appservers > 0 else "Starting")
+       "Ready" if service.appservers > 0 else "Starting" if service.pending_appservers > 0 else "Quiescent")
       for service in services
     )
     AppScaleLogger.log("\n" + tabulate(table, headers=header, tablefmt="plain"))

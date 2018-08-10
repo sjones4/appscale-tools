@@ -87,7 +87,7 @@ class AdminClient(object):
     headers = {'AppScale-Secret': self.secret}
     body = {
       'deployment': {'zip': {'sourceUrl': source_path}},
-      'id': DEFAULT_VERSION,
+      'id': version.id if version.id else DEFAULT_VERSION
       'runtime': version.runtime
     }
     if version.env_variables:

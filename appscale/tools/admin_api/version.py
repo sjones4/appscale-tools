@@ -35,7 +35,6 @@ class Version(object):
     self.service_id = None
 
     # The version ID.
-    # TODO: Allow user to define this property.
     self.id = None
 
     self.env_variables = {}
@@ -64,6 +63,7 @@ class Version(object):
     version = Version(runtime)
     version.configuration_type = 'app.yaml'
     version.project_id = app_yaml.get('application')
+    version.id = app_yaml.get('version', None)
 
     if 'service' in app_yaml and 'module' in app_yaml:
       raise AppEngineConfigException(
@@ -110,6 +110,10 @@ class Version(object):
     application_element = root.find(''.join([XML_NAMESPACE, 'application']))
     if application_element is not None:
       version.project_id = application_element.text
+
+    version_element = root.find(''.join([XML_NAMESPACE, 'version']))
+    if version_element is not None:
+        version.id = version_element.text
 
     service_element = root.find(''.join([XML_NAMESPACE, 'service']))
     module_element = root.find(''.join([XML_NAMESPACE, 'module']))
