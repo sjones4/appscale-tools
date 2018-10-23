@@ -1,6 +1,9 @@
 """ A client that makes requests to the AdminServer. """
 
-import requests
+import warnings
+with warnings.catch_warnings():
+  warnings.filterwarnings('ignore', 'Old version of cryptography \(\[1, 2, 3\]\) may cause slowdown.')
+  import requests
 import yaml
 from retrying import retry
 
