@@ -38,6 +38,7 @@ from appscale.tools.custom_exceptions import (
 from appscale.tools.local_state import APPSCALE_VERSION, LocalState
 from appscale.tools.node_layout import NodeLayout
 from appscale.tools.remote_helper import RemoteHelper
+from appscale.tools.storage_helper import StorageHelper, AppscaleStorageException
 from appscale.tools.version_helper import latest_tools_version
 
 
@@ -989,14 +990,20 @@ class AppScaleTools(object):
     secret_key = LocalState.get_secret_key(options.keyname)
     admin_client = AdminClient(login_host, secret_key)
 
-    remote_file_path = RemoteHelper.copy_app_to_host(
-      file_location, version.project_id, options.keyname, options.verbose,
-      extras, custom_service_yaml)
+    try:
+      source_path = StorageHelper.copy_app_to_storage(
+        file_location, version.project_id, options.keyname, options.verbose,
+        extras, custom_service_yaml)
+    except AppscaleStorageException:
+      AppScaleLogger.warn("Using SSH for deployment")
+      source_path = RemoteHelper.copy_app_to_host(
+        file_location, version.project_id, options.keyname, options.verbose,
+        extras, custom_service_yaml)
 
     AppScaleLogger.log(
       'Deploying service {} for {}'.format(version.service_id,
                                            version.project_id))
-    operation_id = admin_client.create_version(version, remote_file_path)
+    operation_id = admin_client.create_version(version, source_path)
 
     # now that we've told the AppController to start our app, find out what port
     # the app is running on and wait for it to start serving
