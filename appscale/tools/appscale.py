@@ -279,6 +279,8 @@ Available commands:
         elif key == "user_commands":
           command.append("--user_commands")
           command.append(base64.b64encode(yaml.dump(value)))
+        elif key == "gcs":
+          pass  # TODO:STEVE: handle gcs configuration options when deploying
         else:
           command.append(str("--%s" % key))
           command.append(str("%s" % value))

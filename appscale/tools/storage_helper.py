@@ -9,6 +9,7 @@ import uuid
 import yaml
 
 from appscale.tools.appscale_logger import AppScaleLogger
+from appscale.tools.custom_exceptions import AppScalefileException
 from appscale.tools.local_state import LocalState
 from boto.s3.connection import OrdinaryCallingFormat
 
@@ -33,8 +34,11 @@ class StorageHelper(object):
               A tuple of the scheme, host and port for gcs connections
         """
         apps = appscale.tools.appscale.AppScale()
-        apps_file_yaml = apps.read_appscalefile()
-        apps_file = yaml.safe_load(apps_file_yaml)
+        try:
+            apps_file_yaml = apps.read_appscalefile()
+            apps_file = yaml.safe_load(apps_file_yaml)
+        except AppScalefileException:
+            apps_file = {}
         if not apps_file.get('gcs'):
             raise AppscaleStorageException('Cloud storage (gcs) not configured in AppScalefile')
         apps_file_gcs = apps_file.get('gcs')
