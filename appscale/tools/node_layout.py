@@ -31,7 +31,10 @@ class NodeLayout():
 
 
   # TODO: Update this dictionary as roles get renamed/deprecated.
-  DEPRECATED_ROLES = {'appengine': 'compute'}
+  DEPRECATED_ROLES = {
+      'appengine': 'compute',
+      'login': 'load_balancer'
+  }
 
 
   # A tuple containing the keys that can be used in simple deployments.
@@ -39,19 +42,17 @@ class NodeLayout():
 
 
   # A tuple containing the keys that can be used in advanced deployments.
-  # TODO: remove 'appengine' role.
-  ADVANCED_FORMAT_KEYS = [
-    'master', 'database', 'appengine', 'compute', 'open', 'zookeeper',
-    'memcache', 'taskqueue', 'search', 'load_balancer']
+  # TODO: remove 'appengine', 'login' roles.
+  ADVANCED_FORMAT_KEYS = ['master', 'database', 'appengine', 'compute', 'open',
+    'login', 'zookeeper', 'memcache', 'taskqueue', 'search', 'load_balancer']
 
 
   # A tuple containing all of the roles (simple and advanced) that the
   # AppController recognizes. These include _master and _slave roles, which
   # the user may not be able to specify directly.
-  # TODO: remove 'appengine' role.
-  VALID_ROLES = (
-    'master', 'appengine', 'compute', 'database', 'shadow', 'open',
-    'load_balancer', 'db_master', 'db_slave', 'zookeeper', 'memcache',
+  # TODO: remove 'appengine', 'login' roles.
+  VALID_ROLES = ('master', 'appengine', 'compute', 'database', 'shadow', 'open',
+    'load_balancer', 'login', 'db_master', 'db_slave', 'zookeeper', 'memcache',
     'taskqueue', 'taskqueue_master', 'taskqueue_slave', 'search')
 
 
