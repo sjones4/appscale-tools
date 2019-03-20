@@ -42,6 +42,7 @@ class Version(object):
 
     self.env_variables = {}
     self.inbound_services = []
+    self.instance_class = None
     self.threadsafe = None
     self.handlers = None
     self.manual_scaling = None
@@ -83,6 +84,7 @@ class Version(object):
 
     version.env_variables = app_yaml.get('env_variables', {})
     version.inbound_services = app_yaml.get('inbound_services', [])
+    version.instance_class = app_yaml.get('instance_class', None)
 
     automatic_scaling = app_yaml.get('automatic_scaling', None)
     manual_scaling = app_yaml.get('manual_scaling', None)
@@ -163,6 +165,10 @@ class Version(object):
     inbound_services = root.find(qname('inbound-services'))
     if inbound_services is not None:
       version.inbound_services = [service.text for service in inbound_services]
+
+    instance_class_element = root.find(qname('instance-class'))
+    if instance_class_element is not None and instance_class_element.text is not None:
+        version.instance_class = instance_class_element.text
 
     automatic_scaling = root.find(qname('automatic-scaling'))
     manual_scaling = root.find(qname('manual-scaling'))

@@ -104,6 +104,9 @@ class AdminClient(object):
       body['handlers'] = [handler.to_api_dict()
                           for handler in version.handlers]
 
+    if version.instance_class is not None:
+        body['instanceClass'] = version.instance_class
+
     if version.manual_scaling:
       body['manualScaling'] = version.manual_scaling
     elif version.automatic_scaling:
