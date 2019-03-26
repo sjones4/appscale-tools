@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import logging
 import sys
 import traceback
 
@@ -17,6 +18,7 @@ version_helper.ensure_valid_python_is_used()
 
 def main():
   """ Execute appscale script. """
+  logging.basicConfig()
   appscale = AppScale()
   if len(sys.argv) < 2:
     print(AppScale.USAGE)
