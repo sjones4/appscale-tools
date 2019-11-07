@@ -29,6 +29,8 @@ from .custom_exceptions import AppScalefileException
 from .custom_exceptions import BadConfigurationException
 from .custom_exceptions import ShellException
 
+from appscale.agents.factory import InfrastructureAgentFactory
+from appscale.agents.base_agents import BaseAgent
 
 # The version of the AppScale Tools we're running on.
 APPSCALE_VERSION = "3.8.1"
@@ -1242,6 +1244,13 @@ class LocalState(object):
 
     # Don't write to the AppScalefile if there are no changes to make to it.
     if 'keyname' in yaml_contents and 'group' in yaml_contents:
+      return True
+
+    # Update AppScalefile if agent requires it
+    if ('infrastructure' in yaml_contents and
+        InfrastructureAgentFactory.agent_has_flag(
+            yaml_contents['infrastructure'],
+            BaseAgent.FLAG_KEY_AUTO)):
       return True
 
     file_contents += "\n# Automatically added by the AppScale Tools: "

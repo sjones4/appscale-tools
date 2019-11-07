@@ -9,6 +9,7 @@ import yaml
 
 # AppScale-specific imports
 from appscale.agents.factory import InfrastructureAgentFactory
+from appscale.agents.base_agents import BaseAgent
 from .appscale_logger import AppScaleLogger
 from .custom_exceptions import BadConfigurationException
 from .local_state import LocalState
@@ -272,7 +273,8 @@ class NodeLayout():
       instance_type = node_set.get('instance_type', self.default_instance_type)
 
       if self.infrastructure:
-        if not instance_type:
+        if not instance_type and not InfrastructureAgentFactory.agent_has_flag(
+                self.infrastructure, BaseAgent.FLAG_INSTANCE_TYPE_AUTO):
           self.invalid("Must set a default instance type or specify instance "
                        "type per role.")
 
