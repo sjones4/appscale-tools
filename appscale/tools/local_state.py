@@ -247,6 +247,8 @@ class LocalState(object):
         iaas_creds['EC2_ACCESS_KEY'] = options.EC2_ACCESS_KEY
         iaas_creds['EC2_SECRET_KEY'] = options.EC2_SECRET_KEY
         iaas_creds['EC2_URL'] = options.EC2_URL
+      elif options.infrastructure in ['ec2-autoscaling']:
+        iaas_creds['aws_autoscaling_group'] = options.aws_autoscaling_group
       elif options.infrastructure == 'azure':
         iaas_creds['azure_subscription_id'] = options.azure_subscription_id
         iaas_creds['azure_app_id'] = options.azure_app_id

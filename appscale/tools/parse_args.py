@@ -249,7 +249,8 @@ class ParseArgs(object):
         help="the id for the vpc in the aws region to spawn instances in.")
       self.parser.add_argument('--aws_subnet_id',
         help="the id for the subnet in the aws region to spawn instances in.")
-
+      self.parser.add_argument('--aws_autoscaling_group',
+        help="the name for the auto scaling group in the aws region.")
       # Google Compute Engine-specific flags
       gce_group = self.parser.add_mutually_exclusive_group()
       gce_group.add_argument('--client_secrets',
@@ -667,6 +668,13 @@ class ParseArgs(object):
         raise BadConfigurationException("Can't specify a static IP " + \
           "when infrastructure is not specified.")
 
+      return
+
+    # Verify ec2 autoscaling agent settings
+    if self.args.infrastructure == 'ec2-autoscaling':
+      if not self.args.aws_autoscaling_group:
+        raise BadConfigurationException(("Need an autoscaling group name"
+          " (aws_autoscaling_group) when using the ec2-autoscaling agent"))
       return
 
     # Make sure the user gave us an ami/emi if running in a cloud.
