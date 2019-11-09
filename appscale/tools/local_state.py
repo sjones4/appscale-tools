@@ -248,7 +248,7 @@ class LocalState(object):
         iaas_creds['EC2_ACCESS_KEY'] = options.EC2_ACCESS_KEY
         iaas_creds['EC2_SECRET_KEY'] = options.EC2_SECRET_KEY
         iaas_creds['EC2_URL'] = options.EC2_URL
-      elif options.infrastructure in ['ec2-autoscaling']:
+      elif options.infrastructure == 'ec2-autoscaling':
         iaas_creds['aws_autoscaling_group'] = options.aws_autoscaling_group
         iaas_creds['aws_instance_filter'] = options.aws_instance_filter
       elif options.infrastructure == 'azure':
@@ -413,11 +413,12 @@ class LocalState(object):
     # write our yaml metadata file
     appscalefile_contents = {
       'infrastructure' : infrastructure,
-      'group' : options.group,
     }
 
-    if infrastructure != 'xen':
-      appscalefile_contents['zone'] = options.zone
+    if infrastructure != 'ec2-autoscaling':
+      appscalefile_contents['group'] = options.group
+      if infrastructure != 'xen':
+        appscalefile_contents['zone'] = options.zone
 
     if infrastructure == 'gce':
       appscalefile_contents['project'] = options.project
@@ -425,6 +426,9 @@ class LocalState(object):
       appscalefile_contents['EC2_ACCESS_KEY'] = options.EC2_ACCESS_KEY
       appscalefile_contents['EC2_SECRET_KEY'] = options.EC2_SECRET_KEY
       appscalefile_contents['EC2_URL'] = options.EC2_URL
+    elif infrastructure == 'ec2-autoscaling':
+      appscalefile_contents['aws_autoscaling_group'] = options.aws_autoscaling_group
+      appscalefile_contents['aws_instance_filter'] = options.aws_instance_filter
     elif infrastructure == 'azure':
       appscalefile_contents['azure_subscription_id'] = options.azure_subscription_id
       appscalefile_contents['azure_app_id'] = options.azure_app_id
