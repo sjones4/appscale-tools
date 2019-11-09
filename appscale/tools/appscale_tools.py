@@ -34,7 +34,7 @@ from appscale.tools.node_layout import NodeLayout
 from appscale.tools.remote_helper import RemoteHelper
 
 from appscale.agents.factory import InfrastructureAgentFactory
-from appscale.agents.base_agents import BaseAgent
+from appscale.agents.base_agent import BaseAgent
 
 
 MIN_FREE_DISK_DB = 40.0

@@ -9,7 +9,7 @@ import yaml
 
 # AppScale-specific imports
 from appscale.agents.factory import InfrastructureAgentFactory
-from appscale.agents.base_agents import BaseAgent
+from appscale.agents.base_agent import BaseAgent
 from .appscale_logger import AppScaleLogger
 from .custom_exceptions import BadConfigurationException
 from .local_state import LocalState

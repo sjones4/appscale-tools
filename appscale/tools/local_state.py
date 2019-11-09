@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import absolute_import
 
 # First-party Python imports
 import fnmatch
@@ -30,7 +31,7 @@ from .custom_exceptions import BadConfigurationException
 from .custom_exceptions import ShellException
 
 from appscale.agents.factory import InfrastructureAgentFactory
-from appscale.agents.base_agents import BaseAgent
+from appscale.agents.base_agent import BaseAgent
 
 # The version of the AppScale Tools we're running on.
 APPSCALE_VERSION = "3.8.1"
