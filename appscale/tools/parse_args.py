@@ -251,6 +251,9 @@ class ParseArgs(object):
         help="the id for the subnet in the aws region to spawn instances in.")
       self.parser.add_argument('--aws_autoscaling_group',
         help="the name for the auto scaling group in the aws region.")
+      self.parser.add_argument('--aws_instance_filter',
+        help="a filter name=value for restricting instances in the aws region.")
+
       # Google Compute Engine-specific flags
       gce_group = self.parser.add_mutually_exclusive_group()
       gce_group.add_argument('--client_secrets',
